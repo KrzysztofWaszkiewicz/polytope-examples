@@ -55,7 +55,7 @@ with requests.Session() as s:
                 params={
                     "client_id": CLIENT_ID,
                     "redirect_uri": SERVICE_URL,
-                    "scope": "openid offline_access",
+                    "scope": "openid",
                     "response_type": "code",
                 },
             ).content.decode()
@@ -106,7 +106,7 @@ with requests.Session() as s:
         raise Exception("Failed to get token")
 
     # instead of storing the access token, we store the offline_access (kind of "refresh") token
-    token = response.json()["refresh_token"]
+    token = response.json()["access_token"]
     # offline_token = response.json()['refresh_token']
 
     if config.outpath != "stdout":
@@ -116,3 +116,4 @@ with requests.Session() as s:
             print(f"Token successfully written to {config.outpath}")
     else:
         print(token)
+
